@@ -1,19 +1,4 @@
-# 1: Преговор, struct, class, sizeof
-
-# Union (Обединения)
-    Само пример за сега
-    
-## Задача
-
-```
-struct Data {
-    char *name;
-    int[4] indices;
-    bool flag;
-}
-```
-
-Как са подредени член-данните в тази структура? Какъв е размерът й? Какъв щеше да е отговорът на тези въпоси ако на мястото на 'struct' пишеше 'class'? А 'union'?
+# 1: Преговор, template, function pointer
 
 # Template (Шаблони)
 
