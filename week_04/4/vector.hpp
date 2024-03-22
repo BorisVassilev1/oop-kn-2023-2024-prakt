@@ -33,6 +33,13 @@ class Vector {
 template <class T>
 Vector<T>::Vector() : arr(new T[1]), capacity(1), size(0) {}
 
+template<class T>
+Vector<T>::Vector(std::size_t size, const T& el) : arr(new T[size]), capacity(size), size(size) {
+	for(std::size_t i = 0; i < size; ++i) {
+		arr[i] = el;
+	}
+}
+
 template <class T>
 Vector<T>::Vector(const Vector<T>& other) : arr(new T[other.Size()]), capacity(other.Size()), size(other.Size()) {
 	for (std::size_t i = 0; i < size; ++i) {
