@@ -54,7 +54,7 @@ class BoundSet {
 		return true;
 	}
 
-	bool member(const T &n) {
+	bool member(const T &n) const {
 		for (std::size_t i = 0; i < m_size; ++i) {
 			if (n == m_arr[i]) return true;
 		}
