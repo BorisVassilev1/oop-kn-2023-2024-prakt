@@ -53,6 +53,21 @@ public:
 		result += other;
 		return result;
 	}
+
+	Word operator<<(int n) {
+		assert(n>=0);
+		Word res(*this);
+		for(int i = 0; i < n; ++i) res.shiftLeft();
+		return res;
+	}
+
+	Word operator~() {
+		Word res(*this);
+		for(std::size_t i = 0; i < size / 2; ++i) {
+			std::swap(res.contents[i], res.contents[size - 1 - i]);
+		}
+		return res;
+	}
 	
 private: 
 	void copy(const Word &w) {
@@ -75,6 +90,14 @@ private:
 		capacity = newCap;
 	}
 
+	void shiftLeft() {
+		char first = contents[0];
+		for(std::size_t i = 0; i < size-1; ++i) {
+			contents[i] = contents[i+1];
+		}
+		contents[size - 1] = first;
+	}
+	
 	friend std::ostream &operator << (std::ostream &out, const Word &w);
 };
 
@@ -92,4 +115,8 @@ int main() {
 
 	Word HelloWorld = hello + world;
 	std::cout << HelloWorld << std::endl;
+
+	Word traicho("Traicho");
+	std::cout << (traicho << 2) << std::endl;
+	std::cout << (~traicho) << std::endl;
 }
