@@ -31,11 +31,13 @@ class BoundSet {
 	BoundSet(const BoundSet<T> &other) : BoundSet(other, 0) {}
 
 	BoundSet &operator=(const BoundSet<T> &other) {
+		if(&other == this) return *this;
 		delete[] this->m_arr;
 		m_arr	  = new T[other.m_maxSize];
 		m_size	  = other.m_size;
 		m_maxSize = other.m_maxSize;
 		copyArray(other);
+		return *this;
 	}
 
 	~BoundSet() { delete[] m_arr; }
