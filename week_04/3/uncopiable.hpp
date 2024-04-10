@@ -7,7 +7,7 @@ class UncopiableArray {
 	std::size_t _size;
 
    public:
-	UncopiableArray(int size) _size(size) { arr = new T[size]; }
+	UncopiableArray(int size) : _size(size) { arr = new T[size]; }
 
 	UncopiableArray& operator=(const UncopiableArray&) = delete;
 	UncopiableArray(const UncopiableArray&)			   = delete;
