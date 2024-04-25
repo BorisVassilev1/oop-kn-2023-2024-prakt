@@ -6,8 +6,8 @@
 ```cpp
 Animal *c = new Cat();
 Animal *d = new Dog();
-c.makeSound() // -> meow
-d.makeSound() // -> bow
+c->makeSound(); // -> meow
+d->makeSound(); // -> bow
 ```
 
 ## Как можем да постигнем този ефект със знанията си до сега?
