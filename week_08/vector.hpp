@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <functional>
@@ -12,6 +13,60 @@ class Vector {
 	std::size_t size;
 
    public:
+	class Iterator {
+	   protected:
+		Vector<T>*	v;
+		std::size_t index;
+		Iterator(Vector<T>* v, std::size_t index) : v(v), index(index) {}
+
+	   public:
+		inline Iterator& operator++();
+		inline Iterator	 operator++(int);
+		inline Iterator& operator--();
+		inline Iterator	 operator--(int);
+		inline const T&	 operator*() const { return (*v)[index]; }
+		inline T&		 operator*() { return (*v)[index]; }
+		inline bool		 operator!=(Iterator other) const { return index != other.index || v != other.v; }
+		inline bool		 operator==(Iterator other) const { return index == other.index && v == other.v; }
+		friend class Vector<T>;
+	};
+
+	class ReverseIterator : public Iterator {
+		using Iterator::Iterator;
+
+	   public:
+		inline ReverseIterator& operator++() {
+			this->Iterator::operator--();
+			return *this;
+		}
+		inline ReverseIterator& operator--() {
+			this->Iterator::operator++();
+			return *this;
+		}
+	};
+
+	class OrderedIterator : public Iterator {
+		using Iterator::Iterator;
+
+	   public:
+		inline OrderedIterator& operator++();
+		inline OrderedIterator& operator--();
+	};
+
+	class ReverseOrderedIterator : public OrderedIterator {
+		using OrderedIterator::OrderedIterator;
+
+	   public:
+		inline ReverseOrderedIterator& operator++() {
+			OrderedIterator::operator--();
+			return *this;
+		}
+		inline ReverseOrderedIterator& operator--() {
+			OrderedIterator::operator++();
+			return *this;
+		}
+	};
+
 	Vector();
 	Vector(const Vector<T>& other);
 	Vector(Vector<T>&& other);
@@ -32,6 +87,18 @@ class Vector {
 
 	Vector<T> Subvec(int i, int j) const;
 	void	  Sort(std::function<bool(const T&, const T&)> f);
+
+	Iterator begin() { return Iterator(this, 0); }
+	Iterator end() { return Iterator(this, size); }
+
+	ReverseIterator rbegin() { return ReverseIterator(this, size - 1); }
+	ReverseIterator rend() { return ReverseIterator(this, -1); }
+
+	OrderedIterator ordBegin() { return OrderedIterator(this, std::min_element(arr, arr + size) - arr); }
+	OrderedIterator ordEnd() { return OrderedIterator(this, -1); }
+
+	ReverseOrderedIterator rordBegin() { return ReverseOrderedIterator(this, std::max_element(arr, arr + size) - arr); }
+	ReverseOrderedIterator rordEnd() { return ReverseOrderedIterator(this, -1); }
 
    private:
 	void resize(std::size_t newSize);
@@ -83,14 +150,14 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 	return *this;
 }
 
-template<class T>
+template <class T>
 Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
 	std::cout << "move operator = " << this << std::endl;
 	if (this == &other) return *this;
 	delete[] arr;
-	arr = other.arr;
-	capacity = other.capacity;
-	size = other.size;
+	arr		  = other.arr;
+	capacity  = other.capacity;
+	size	  = other.size;
 	other.arr = nullptr;
 	return *this;
 }
@@ -168,4 +235,53 @@ void Vector<T>::resize(std::size_t newSize) {
 	capacity = newSize;
 	delete[] arr;
 	arr = new_arr;
+}
+
+template <class T>
+Vector<T>::Iterator& Vector<T>::Iterator::operator++() {
+	++this->index;
+	return *this;
+}
+template <class T>
+Vector<T>::Iterator Vector<T>::Iterator::operator++(int) {
+	Iterator res = *this;
+	this->operator++();
+	return res;
+}
+
+template <class T>
+Vector<T>::Iterator& Vector<T>::Iterator::operator--() {
+	--this->index;
+	return *this;
+}
+template <class T>
+Vector<T>::Iterator Vector<T>::Iterator::operator--(int) {
+	Iterator res = *this;
+	this->operator--();
+	return res;
+}
+
+template <class T>
+Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
+	std::size_t best_ind = -1;
+	for (std::size_t i = 0; i < this->v->Size(); ++i) {
+		if (this->v->Get(i) > **this) {
+			if (best_ind == -1ul) best_ind = i;
+			else if (this->v->Get(i) < this->v->Get(best_ind)) best_ind = i;
+		}
+	}
+	this->index = best_ind;
+	return *this;
+}
+template <class T>
+Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
+	std::size_t best_ind = -1;
+	for (std::size_t i = 0; i < this->v->Size(); ++i) {
+		if (this->v->Get(i) < **this) {
+			if (best_ind == -1ul) best_ind = i;
+			else if (this->v->Get(i) > this->v->Get(best_ind)) best_ind = i;
+		}
+	}
+	this->index = best_ind;
+	return *this;
 }
