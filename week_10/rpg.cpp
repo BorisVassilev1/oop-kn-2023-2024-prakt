@@ -75,4 +75,3 @@ class Goomba {
 	void AttackType(Character *) {}
 };
 
-int main() {}
