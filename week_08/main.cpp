@@ -33,7 +33,7 @@ int main() {
 	std::cout << std::endl << std::endl;
 
 	std::cout << "reverse: ";
-	for(auto i = v2.rbegin(); i != v2.rend(); ++i) {
+	for(auto i = v2.rbegin(); i != v2.rend(); i++) {
 		std::cout << *i << " ";
 	}
 	std::cout << std::endl << std::endl;
@@ -45,7 +45,7 @@ int main() {
 	std::cout << std::endl << std::endl;
 
 	std::cout << "sorted reverse: ";
-	for(auto i = v2.rordBegin(); i != v2.rordEnd(); ++i) {
+	for(auto i = v2.rordBegin(); i != v2.rordEnd(); i++) {
 		std::cout << *i << " ";
 	}
 	std::cout << std::endl << std::endl;

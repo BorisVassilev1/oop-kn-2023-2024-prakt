@@ -35,14 +35,10 @@ class Vector {
 		using Iterator::Iterator;
 
 	   public:
-		inline ReverseIterator& operator++() {
-			this->Iterator::operator--();
-			return *this;
-		}
-		inline ReverseIterator& operator--() {
-			this->Iterator::operator++();
-			return *this;
-		}
+		inline ReverseIterator& operator++();
+		inline ReverseIterator	operator++(int);
+		inline ReverseIterator& operator--();
+		inline ReverseIterator	operator--(int);
 	};
 
 	class OrderedIterator : public Iterator {
@@ -50,21 +46,19 @@ class Vector {
 
 	   public:
 		inline OrderedIterator& operator++();
+		inline OrderedIterator	operator++(int);
 		inline OrderedIterator& operator--();
+		inline OrderedIterator	operator--(int);
 	};
 
 	class ReverseOrderedIterator : public OrderedIterator {
 		using OrderedIterator::OrderedIterator;
 
 	   public:
-		inline ReverseOrderedIterator& operator++() {
-			OrderedIterator::operator--();
-			return *this;
-		}
-		inline ReverseOrderedIterator& operator--() {
-			OrderedIterator::operator++();
-			return *this;
-		}
+		inline ReverseOrderedIterator& operator++();
+		inline ReverseOrderedIterator  operator++(int);
+		inline ReverseOrderedIterator& operator--();
+		inline ReverseOrderedIterator  operator--(int);
 	};
 
 	Vector();
@@ -262,6 +256,58 @@ Vector<T>::Iterator Vector<T>::Iterator::operator--(int) {
 }
 
 template <class T>
+Vector<T>::ReverseIterator& Vector<T>::ReverseIterator::operator++() {
+	this->Iterator::operator--();
+	return *this;
+}
+
+template <class T>
+Vector<T>::ReverseIterator Vector<T>::ReverseIterator::operator++(int) {
+	ReverseIterator res = *this;
+	this->operator++();
+	return res;
+}
+
+template <class T>
+Vector<T>::ReverseIterator& Vector<T>::ReverseIterator::operator--() {
+	this->Iterator::operator++();
+	return *this;
+}
+
+template <class T>
+Vector<T>::ReverseIterator Vector<T>::ReverseIterator::operator--(int) {
+	ReverseIterator res = *this;
+	this->operator--();
+	return res;
+}
+
+template <class T>
+Vector<T>::ReverseOrderedIterator& Vector<T>::ReverseOrderedIterator::operator++() {
+	OrderedIterator::operator--();
+	return *this;
+}
+
+template <class T>
+Vector<T>::ReverseOrderedIterator Vector<T>::ReverseOrderedIterator ::operator++(int) {
+	ReverseOrderedIterator res = *this;
+	this->operator++();
+	return res;
+}
+
+template <class T>
+Vector<T>::ReverseOrderedIterator& Vector<T>::ReverseOrderedIterator::operator--() {
+	OrderedIterator::operator++();
+	return *this;
+}
+
+template <class T>
+Vector<T>::ReverseOrderedIterator Vector<T>::ReverseOrderedIterator ::operator--(int) {
+	ReverseOrderedIterator res = *this;
+	this->operator--();
+	return res;
+}
+
+template <class T>
 Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
 	std::size_t best_ind = -1;
 	for (std::size_t i = 0; i < this->v->Size(); ++i) {
@@ -273,6 +319,14 @@ Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
 	this->index = best_ind;
 	return *this;
 }
+
+template <class T>
+Vector<T>::OrderedIterator Vector<T>::OrderedIterator ::operator++(int) {
+	OrderedIterator res = *this;
+	this->operator++();
+	return res;
+}
+
 template <class T>
 Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
 	std::size_t best_ind = -1;
@@ -284,4 +338,11 @@ Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
 	}
 	this->index = best_ind;
 	return *this;
+}
+
+template <class T>
+Vector<T>::OrderedIterator Vector<T>::OrderedIterator ::operator--(int) {
+	OrderedIterator res = *this;
+	this->operator--();
+	return res;
 }
