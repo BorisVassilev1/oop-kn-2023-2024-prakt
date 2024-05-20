@@ -1,6 +1,7 @@
 #include <iostream>
 #include <utility>
-#include "vector.hpp"
+//#include "vector.hpp"
+#include "vector_sfinae.hpp"
 
 Vector<int> makeVec(int size) {
 	Vector<int> v;
@@ -39,7 +40,7 @@ int main() {
 	std::cout << std::endl << std::endl;
 
 	std::cout << "sorted: ";
-	for(auto i = v2.ordBegin(); i != v2.ordEnd(); ++i) {
+	for(auto i = v2.ordBegin(); i != v2.ordEnd(); i++) {
 		std::cout << *i << " ";
 	}
 	std::cout << std::endl << std::endl;
