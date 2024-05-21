@@ -277,7 +277,7 @@ Child Vector<T>::IteratorBase<Child>::operator--(int) {
 }
 
 template <class T>
-Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
+typename Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
 	std::size_t best_ind = -1;
 	for (std::size_t i = 0; i < this->v->Size(); ++i) {
 		if (this->v->Get(i) > **this) {
@@ -290,7 +290,7 @@ Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
 }
 
 template <class T>
-Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
+typename Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
 	std::size_t best_ind = -1;
 	for (std::size_t i = 0; i < this->v->Size(); ++i) {
 		if (this->v->Get(i) < **this) {

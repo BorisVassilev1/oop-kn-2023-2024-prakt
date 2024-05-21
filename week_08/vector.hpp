@@ -232,83 +232,83 @@ void Vector<T>::resize(std::size_t newSize) {
 }
 
 template <class T>
-Vector<T>::Iterator& Vector<T>::Iterator::operator++() {
+typename Vector<T>::Iterator& Vector<T>::Iterator::operator++() {
 	++this->index;
 	return *this;
 }
 template <class T>
-Vector<T>::Iterator Vector<T>::Iterator::operator++(int) {
+typename Vector<T>::Iterator Vector<T>::Iterator::operator++(int) {
 	Iterator res = *this;
 	this->operator++();
 	return res;
 }
 
 template <class T>
-Vector<T>::Iterator& Vector<T>::Iterator::operator--() {
+typename Vector<T>::Iterator& Vector<T>::Iterator::operator--() {
 	--this->index;
 	return *this;
 }
 template <class T>
-Vector<T>::Iterator Vector<T>::Iterator::operator--(int) {
+typename Vector<T>::Iterator Vector<T>::Iterator::operator--(int) {
 	Iterator res = *this;
 	this->operator--();
 	return res;
 }
 
 template <class T>
-Vector<T>::ReverseIterator& Vector<T>::ReverseIterator::operator++() {
+typename Vector<T>::ReverseIterator& Vector<T>::ReverseIterator::operator++() {
 	this->Iterator::operator--();
 	return *this;
 }
 
 template <class T>
-Vector<T>::ReverseIterator Vector<T>::ReverseIterator::operator++(int) {
+typename Vector<T>::ReverseIterator Vector<T>::ReverseIterator::operator++(int) {
 	ReverseIterator res = *this;
 	this->operator++();
 	return res;
 }
 
 template <class T>
-Vector<T>::ReverseIterator& Vector<T>::ReverseIterator::operator--() {
+typename Vector<T>::ReverseIterator& Vector<T>::ReverseIterator::operator--() {
 	this->Iterator::operator++();
 	return *this;
 }
 
 template <class T>
-Vector<T>::ReverseIterator Vector<T>::ReverseIterator::operator--(int) {
+typename Vector<T>::ReverseIterator Vector<T>::ReverseIterator::operator--(int) {
 	ReverseIterator res = *this;
 	this->operator--();
 	return res;
 }
 
 template <class T>
-Vector<T>::ReverseOrderedIterator& Vector<T>::ReverseOrderedIterator::operator++() {
+typename Vector<T>::ReverseOrderedIterator& Vector<T>::ReverseOrderedIterator::operator++() {
 	OrderedIterator::operator--();
 	return *this;
 }
 
 template <class T>
-Vector<T>::ReverseOrderedIterator Vector<T>::ReverseOrderedIterator ::operator++(int) {
+typename Vector<T>::ReverseOrderedIterator Vector<T>::ReverseOrderedIterator ::operator++(int) {
 	ReverseOrderedIterator res = *this;
 	this->operator++();
 	return res;
 }
 
 template <class T>
-Vector<T>::ReverseOrderedIterator& Vector<T>::ReverseOrderedIterator::operator--() {
+typename Vector<T>::ReverseOrderedIterator& Vector<T>::ReverseOrderedIterator::operator--() {
 	OrderedIterator::operator++();
 	return *this;
 }
 
 template <class T>
-Vector<T>::ReverseOrderedIterator Vector<T>::ReverseOrderedIterator ::operator--(int) {
+typename Vector<T>::ReverseOrderedIterator Vector<T>::ReverseOrderedIterator ::operator--(int) {
 	ReverseOrderedIterator res = *this;
 	this->operator--();
 	return res;
 }
 
 template <class T>
-Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
+typename Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
 	std::size_t best_ind = -1;
 	for (std::size_t i = 0; i < this->v->Size(); ++i) {
 		if (this->v->Get(i) > **this) {
@@ -321,14 +321,14 @@ Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator++() {
 }
 
 template <class T>
-Vector<T>::OrderedIterator Vector<T>::OrderedIterator ::operator++(int) {
+typename Vector<T>::OrderedIterator Vector<T>::OrderedIterator ::operator++(int) {
 	OrderedIterator res = *this;
 	this->operator++();
 	return res;
 }
 
 template <class T>
-Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
+typename Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
 	std::size_t best_ind = -1;
 	for (std::size_t i = 0; i < this->v->Size(); ++i) {
 		if (this->v->Get(i) < **this) {
@@ -341,7 +341,7 @@ Vector<T>::OrderedIterator& Vector<T>::OrderedIterator::operator--() {
 }
 
 template <class T>
-Vector<T>::OrderedIterator Vector<T>::OrderedIterator ::operator--(int) {
+typename Vector<T>::OrderedIterator Vector<T>::OrderedIterator ::operator--(int) {
 	OrderedIterator res = *this;
 	this->operator--();
 	return res;
