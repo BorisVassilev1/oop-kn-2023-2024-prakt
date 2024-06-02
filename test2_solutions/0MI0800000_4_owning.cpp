@@ -30,6 +30,7 @@ class Min : public MathExpression {
 		other.e2 = nullptr;
 	}
 	Min &operator=(const Min &other) {
+		if(this == &other) return *this;
 		delete e1;
 		delete e2;
 		e1 = other.e1->clone();
@@ -37,6 +38,7 @@ class Min : public MathExpression {
 		return *this;
 	}
 	Min &operator=(Min &&other) {
+		if(this == &other) return *this;
 		delete e1;
 		delete e2;
 		e1		 = other.e1;
@@ -75,6 +77,7 @@ class Sum : public MathExpression {
 		other.exps.clear();
 	}
 	Sum &operator=(const Sum &other) {
+		if(this == &other) return *this;
 		for (auto exp : exps)
 			delete exp;
 		exps.clear();
@@ -83,6 +86,7 @@ class Sum : public MathExpression {
 		return *this;
 	}
 	Sum &operator=(Sum &&other) {
+		if(this == &other) return *this;
 		for (auto exp : exps)
 			delete exp;
 		exps = other.exps;
